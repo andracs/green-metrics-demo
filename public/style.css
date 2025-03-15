@@ -4,9 +4,12 @@ th {
 
 td:first-child {
     text-align: center;
-    font-weight: bold;
 }
 
 td:last-child {
     width: 80%;
+}
+
+article {
+    border: 3px solid rgb(227, 227, 227);
 }
