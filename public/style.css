@@ -1,0 +1,12 @@
+th {
+    text-align: center;
+}
+
+td:first-child {
+    text-align: center;
+    font-weight: bold;
+}
+
+td:last-child {
+    width: 80%;
+}
