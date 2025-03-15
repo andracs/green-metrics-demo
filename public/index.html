@@ -54,10 +54,33 @@
         </article>
     </main>
     <script type="module">
-        import init from '/hashing.js';
+        import init, { blake3 } from '/hashing.js';
+
+        function blake3js(input) {
+            return `hash(${input})`;
+        }
+
+        const algos = {
+            'blake3': {
+                digestEl: document.getElementById('blake3-digest'),
+                rsfunc: blake3,
+                jsfunc: blake3js,
+            }
+        };
 
         init().then(() => {
             console.log('WebAssembly has loaded.');
+
+            let input = document.getElementById('input');
+            input.addEventListener('input', () => {
+                for (const [name, algo] of Object.entries(algos)) {
+                    algo.digestEl.textContent = '';
+                    algo.digestEl.ariaBusy = true;
+                    const hash = algo.rsfunc(input.value);
+                    algo.digestEl.ariaBusy = false;
+                    algo.digestEl.textContent = hash;
+                }
+            });
         });
     </script>
 </body>
