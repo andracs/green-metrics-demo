@@ -41,6 +41,11 @@ fn main() {
 }
 
 #[wasm_bindgen]
+pub fn ripemd160(input: &str) -> String {
+    hex_encode(&ripemd::Ripemd160::digest(input))
+}
+
+#[wasm_bindgen]
 pub fn crc32(input: &str) -> String {
     hex_encode(&crc32fast::hash(input.as_bytes()).to_be_bytes())
 }

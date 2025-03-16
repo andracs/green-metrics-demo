@@ -1,6 +1,10 @@
 let worker;
 
 const algorithms = {
+    'ripemd160': {
+        enabled: true,
+        callback: undefined,
+    },
     'md5': {
         enabled: true,
         callback: undefined,

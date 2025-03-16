@@ -4,43 +4,51 @@ import init, {
     sha512 as sha512rs,
     md5 as md5rs,
     crc32 as crc32rs,
+    ripemd160 as ripemd160rs,
 } from './hashing.js';
-
+import { ripemd160 } from '@noble/hashes/ripemd160';
+import { bytesToHex as toHex } from '@noble/hashes/utils';
 import CryptoJS from 'crypto-js';
 import { Crc32 } from '@aws-crypto/crc32';
 
 const algorithms = {
+    'ripemd160': {
+        'javascript': async (input) => {
+            return toHex(ripemd160(input));
+        },
+        'rust-wasm': async (input) => { return ripemd160rs(input); },
+    },
     'crc32': {
-        'javascript': (input) => {
+        'javascript': async (input) => {
             const bytes = (new TextEncoder()).encode(input);
             const digest = (new Crc32()).update(bytes).digest();
             return digest.toString(16).padStart(8, '0');
         },
-        'rust-wasm': crc32rs,
+        'rust-wasm': async (input) => { return crc32rs(input); },
     },
     'md5': {
-        'javascript': (input) => {
+        'javascript': async (input) => {
             return CryptoJS.enc.Hex.stringify(CryptoJS.MD5(input));
         },
-        'rust-wasm': md5rs,
+        'rust-wasm': async (input) => { return md5rs(input); },
     },
     'sha1': {
-        'javascript': (input) => {
+        'javascript': async (input) => {
             return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(input));
         },
-        'rust-wasm': sha1rs,
+        'rust-wasm': async (input) => { return sha1rs(input); },
     },
     'sha256': {
-        'javascript': (input) => {
+        'javascript': async (input) => {
             return CryptoJS.enc.Hex.stringify(CryptoJS.SHA256(input));
         },
-        'rust-wasm': sha256rs,
+        'rust-wasm': async (input) => { return sha256rs(input); },
     },
     'sha512': {
-        'javascript': (input) => {
+        'javascript': async (input) => {
             return CryptoJS.enc.Hex.stringify(CryptoJS.SHA512(input));
         },
-        'rust-wasm': sha512rs,
+        'rust-wasm': async (input) => { return sha512rs(input); },
     },
 };
 
@@ -55,7 +63,7 @@ self.onmessage = async ({ data: { id, algorithm, lang, input, iterations } }) =>
     iterations ??= 1;
 
     for (let i = 0; i < iterations; i++) {
-        out = hashFunc(out);
+        out = await hashFunc(out);
     }
 
     const after = performance.now();
