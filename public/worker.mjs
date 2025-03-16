@@ -5,8 +5,10 @@ import init, {
     md5 as md5rs,
     crc32 as crc32rs,
     ripemd160 as ripemd160rs,
+    blake3 as blake3rs,
 } from './hashing.js';
 import { ripemd160 } from '@noble/hashes/ripemd160';
+import { blake3 } from '@noble/hashes/blake3';
 import { bytesToHex as toHex } from '@noble/hashes/utils';
 import CryptoJS from 'crypto-js';
 import { Crc32 } from '@aws-crypto/crc32';
@@ -17,6 +19,12 @@ const algorithms = {
             return toHex(ripemd160(input));
         },
         'rust-wasm': async (input) => { return ripemd160rs(input); },
+    },
+    'blake3': {
+        'javascript': async (input) => {
+            return toHex(blake3(input));
+        },
+        'rust-wasm': async (input) => { return blake3rs(input); },
     },
     'crc32': {
         'javascript': async (input) => {

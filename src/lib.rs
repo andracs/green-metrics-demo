@@ -46,6 +46,11 @@ pub fn ripemd160(input: &str) -> String {
 }
 
 #[wasm_bindgen]
+pub fn blake3(input: &str) -> String {
+    blake3::hash(&input.as_bytes()).to_hex().to_string()
+}
+
+#[wasm_bindgen]
 pub fn crc32(input: &str) -> String {
     hex_encode(&crc32fast::hash(input.as_bytes()).to_be_bytes())
 }

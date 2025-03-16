@@ -22,7 +22,7 @@ const algorithms = {
         callback: undefined,
     },
     'blake3': {
-        enabled: false,
+        enabled: true,
         callback: undefined,
     },
     'crc32': {
