@@ -6,7 +6,7 @@ const algorithms = {
         callback: undefined,
     },
     'sha1': {
-        enabled: false,
+        enabled: true,
         callback: undefined,
     },
     'sha256': {

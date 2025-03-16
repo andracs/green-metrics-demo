@@ -1,3 +1,4 @@
+use sha1::Sha1;
 use sha2::{Digest, Sha256, Sha512};
 use wasm_bindgen::prelude::wasm_bindgen;
 
@@ -37,6 +38,11 @@ fn hex_encode(bytes: &[u8]) -> String {
 #[wasm_bindgen(start)]
 fn main() {
     console_log::init_with_level(log::Level::Debug).unwrap();
+}
+
+#[wasm_bindgen]
+pub fn sha1(input: &str) -> String {
+    hex_encode(&Sha1::digest(input))
 }
 
 #[wasm_bindgen]
