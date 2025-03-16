@@ -13,7 +13,7 @@ const algorithms = {
         callback: undefined,
     },
     'sha512': {
-        enabled: false,
+        enabled: true,
         callback: undefined,
     },
     'blake3': {

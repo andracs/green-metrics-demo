@@ -1,4 +1,4 @@
-import init, { sha256 as sha256rs } from './hashing.js';
+import init, { sha256 as sha256rs, sha512 as sha512rs } from './hashing.js';
 import CryptoJS from 'crypto-js';
 
 const algorithms = {
@@ -7,6 +7,12 @@ const algorithms = {
             return CryptoJS.enc.Hex.stringify(CryptoJS.SHA256(input));
         },
         'rust-wasm': sha256rs,
+    },
+    'sha512': {
+        'javascript': (input) => {
+            return CryptoJS.enc.Hex.stringify(CryptoJS.SHA512(input));
+        },
+        'rust-wasm': sha512rs,
     },
 };
 
