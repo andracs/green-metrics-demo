@@ -3,11 +3,21 @@ import init, {
     sha256 as sha256rs,
     sha512 as sha512rs,
     md5 as md5rs,
+    crc32 as crc32rs,
 } from './hashing.js';
 
 import CryptoJS from 'crypto-js';
+import { Crc32 } from '@aws-crypto/crc32';
 
 const algorithms = {
+    'crc32': {
+        'javascript': (input) => {
+            const bytes = (new TextEncoder()).encode(input);
+            const digest = (new Crc32()).update(bytes).digest();
+            return digest.toString(16).padStart(8, '0');
+        },
+        'rust-wasm': crc32rs,
+    },
     'md5': {
         'javascript': (input) => {
             return CryptoJS.enc.Hex.stringify(CryptoJS.MD5(input));

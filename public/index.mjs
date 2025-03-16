@@ -22,7 +22,7 @@ const algorithms = {
         callback: undefined,
     },
     'crc32': {
-        enabled: false,
+        enabled: true,
         callback: undefined,
     },
 }

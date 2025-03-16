@@ -41,6 +41,11 @@ fn main() {
 }
 
 #[wasm_bindgen]
+pub fn crc32(input: &str) -> String {
+    hex_encode(&crc32fast::hash(input.as_bytes()).to_be_bytes())
+}
+
+#[wasm_bindgen]
 pub fn md5(input: &str) -> String {
     hex_encode(&md5::compute(input).0)
 }

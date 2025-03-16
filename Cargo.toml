@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 console_log = "1.0.0"
+crc32fast = "1.4.2"
 log = "0.4.26"
 md5 = "0.7.0"
 sha1 = "0.10.6"
