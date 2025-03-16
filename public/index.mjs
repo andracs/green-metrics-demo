@@ -1,4 +1,5 @@
-const worker = new Worker(new URL('./worker.mjs', import.meta.url));
+let worker;
+
 const algorithms = {
     'md5': {
         enabled: false,
@@ -50,17 +51,25 @@ const createCallback = (sent) => {
     };
 };
 
-worker.onmessage = ({ data }) => {
-    if (!data) {
-        console.error(`Received invalid worker response.`);
-        return;
+const initWorker = () => {
+    if (worker !== undefined) {
+        worker.terminate();
     }
 
-    for (const [_, { enabled, callback }] of Object.entries(algorithms)) {
-        if (enabled && callback !== undefined) {
-            callback(data);
+    worker = new Worker(new URL('./worker.mjs', import.meta.url));
+
+    worker.onmessage = ({ data }) => {
+        if (!data) {
+            console.error(`Received invalid worker response.`);
+            return;
         }
-    }
+
+        for (const [_, { enabled, callback }] of Object.entries(algorithms)) {
+            if (enabled && callback !== undefined) {
+                callback(data);
+            }
+        }
+    };
 };
 
 let id = 0;
@@ -85,6 +94,8 @@ const updateHashDigests = () => {
     if (!lang) {
         return;
     }
+
+    initWorker();
 
     for (let [algorithm, { enabled }] of Object.entries(algorithms)) {
         const el = document.getElementById(`${algorithm}-digest`);
