@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hash generator</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <script defer="" type="module" src="/hashing.js"></script>
     <link rel="stylesheet" href="/style.css">
 </head>
 
@@ -17,8 +16,20 @@
                 <h1>Hash generator</h1>
                 <p class="tagline">Turn any unicode text into hashes!</p>
             </header>
-            <label for="input">Put the text you want hashed here:</label>
+
+            <label for="languages">Choose a language to generate hash digests</label>
+            <select name="languages" id="languages">
+                <option value="rust-wasm">WebAssembly (compiled from Rust)</option>
+                <option value="javascript">JavaScript</option>
+            </select>
+
+            <label for="iterations">Choose hash iterations</label>
+            <input min="1" value="1" type="number" name="iterations" id="iterations"></input>
+            <small id="invalid-number" class="valid">Number must be a positive integer</small>
+
+            <label for="input">Put the text you want hashed here</label>
             <textarea name="input" id="input"></textarea>
+
             <table class="striped">
                 <thead>
                     <th>Algorithm</th>
@@ -53,36 +64,6 @@
             </table>
         </article>
     </main>
-    <script type="module">
-        import init, { blake3 } from '/hashing.js';
-
-        function blake3js(input) {
-            return `hash(${input})`;
-        }
-
-        const algos = {
-            'blake3': {
-                digestEl: document.getElementById('blake3-digest'),
-                rsfunc: blake3,
-                jsfunc: blake3js,
-            }
-        };
-
-        init().then(() => {
-            console.log('WebAssembly has loaded.');
-
-            let input = document.getElementById('input');
-            input.addEventListener('input', () => {
-                for (const [name, algo] of Object.entries(algos)) {
-                    algo.digestEl.textContent = '';
-                    algo.digestEl.ariaBusy = true;
-                    const hash = algo.rsfunc(input.value);
-                    algo.digestEl.ariaBusy = false;
-                    algo.digestEl.textContent = hash;
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

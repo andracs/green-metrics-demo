@@ -1,3 +1,9 @@
+h1 {
+    margin-block: 0.67em;
+    font-size: 2em;
+}
+
+
 th {
     text-align: center;
 }
@@ -12,4 +18,17 @@ td:last-child {
 
 article {
     border: 3px solid rgb(227, 227, 227);
+}
+
+td.disable {
+    color: grey;
+    text-align: center;
+}
+
+small {
+    color: rgb(215, 0, 0);
+}
+
+small.valid {
+    display: none;
 }
