@@ -15,48 +15,48 @@ import { Crc32 } from '@aws-crypto/crc32';
 
 const algorithms = {
     'ripemd160': {
-        'javascript': async (input) => {
+        'javascript': (input) => {
             return toHex(ripemd160(input));
         },
-        'rust-wasm': async (input) => { return ripemd160rs(input); },
+        'rust-wasm': ripemd160rs,
     },
     'blake3': {
-        'javascript': async (input) => {
+        'javascript': (input) => {
             return toHex(blake3(input));
         },
-        'rust-wasm': async (input) => { return blake3rs(input); },
+        'rust-wasm': blake3rs,
     },
     'crc32': {
-        'javascript': async (input) => {
+        'javascript': (input) => {
             const bytes = (new TextEncoder()).encode(input);
             const digest = (new Crc32()).update(bytes).digest();
             return digest.toString(16).padStart(8, '0');
         },
-        'rust-wasm': async (input) => { return crc32rs(input); },
+        'rust-wasm': crc32rs,
     },
     'md5': {
-        'javascript': async (input) => {
+        'javascript': (input) => {
             return CryptoJS.enc.Hex.stringify(CryptoJS.MD5(input));
         },
-        'rust-wasm': async (input) => { return md5rs(input); },
+        'rust-wasm': md5rs,
     },
     'sha1': {
-        'javascript': async (input) => {
+        'javascript': (input) => {
             return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(input));
         },
-        'rust-wasm': async (input) => { return sha1rs(input); },
+        'rust-wasm': sha1rs,
     },
     'sha256': {
-        'javascript': async (input) => {
+        'javascript': (input) => {
             return CryptoJS.enc.Hex.stringify(CryptoJS.SHA256(input));
         },
-        'rust-wasm': async (input) => { return sha256rs(input); },
+        'rust-wasm': sha256rs,
     },
     'sha512': {
-        'javascript': async (input) => {
+        'javascript': (input) => {
             return CryptoJS.enc.Hex.stringify(CryptoJS.SHA512(input));
         },
-        'rust-wasm': async (input) => { return sha512rs(input); },
+        'rust-wasm': sha512rs,
     },
 };
 
@@ -71,7 +71,7 @@ self.onmessage = async ({ data: { id, algorithm, lang, input, iterations } }) =>
     iterations ??= 1;
 
     for (let i = 0; i < iterations; i++) {
-        out = await hashFunc(out);
+        out = hashFunc(out);
     }
 
     const after = performance.now();
