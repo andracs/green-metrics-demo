@@ -49,9 +49,12 @@ const createCallback = (sent) => {
             return;
         }
 
-        const el = document.getElementById(`${algorithm}-digest`);
-        el.ariaBusy = false;
-        el.innerText = `${elapsed}ms ${lang} ${digest}`;
+        const digestEl = document.getElementById(`${algorithm}-digest`);
+        digestEl.ariaBusy = false;
+        digestEl.innerText = `${digest}`;
+
+        const elapsedEl = document.getElementById(`${algorithm}-elapsed`);
+        elapsedEl.innerText = `${elapsed}ms`;
     };
 };
 
@@ -114,6 +117,9 @@ const updateHashDigests = () => {
         el.innerText = '';
         el.ariaBusy = true;
 
+        const elapsedEl = document.getElementById(`${algorithm}-elapsed`);
+        elapsedEl.innerText = '';
+
         const message = {
             id: id++,
             algorithm: algorithm,
@@ -121,8 +127,6 @@ const updateHashDigests = () => {
             input: inputEl.value,
             iterations,
         };
-
-        console.log(JSON.stringify(message));
 
         algorithms[algorithm].callback = createCallback(message);
         worker.postMessage(message);
