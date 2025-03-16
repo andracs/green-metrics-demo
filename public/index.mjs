@@ -2,7 +2,7 @@ let worker;
 
 const algorithms = {
     'md5': {
-        enabled: false,
+        enabled: true,
         callback: undefined,
     },
     'sha1': {

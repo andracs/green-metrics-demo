@@ -41,6 +41,11 @@ fn main() {
 }
 
 #[wasm_bindgen]
+pub fn md5(input: &str) -> String {
+    hex_encode(&md5::compute(input).0)
+}
+
+#[wasm_bindgen]
 pub fn sha1(input: &str) -> String {
     hex_encode(&Sha1::digest(input))
 }

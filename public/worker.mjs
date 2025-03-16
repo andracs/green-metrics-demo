@@ -2,11 +2,18 @@ import init, {
     sha1 as sha1rs,
     sha256 as sha256rs,
     sha512 as sha512rs,
+    md5 as md5rs,
 } from './hashing.js';
 
 import CryptoJS from 'crypto-js';
 
 const algorithms = {
+    'md5': {
+        'javascript': (input) => {
+            return CryptoJS.enc.Hex.stringify(CryptoJS.MD5(input));
+        },
+        'rust-wasm': md5rs,
+    },
     'sha1': {
         'javascript': (input) => {
             return CryptoJS.enc.Hex.stringify(CryptoJS.SHA1(input));
