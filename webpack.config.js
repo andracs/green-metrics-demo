@@ -2,6 +2,7 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import CopyPlugin from 'copy-webpack-plugin';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -29,5 +30,10 @@ export default {
         new HtmlWebpackPlugin({
             template: './public/index.html',
         }),
+        new CopyPlugin({
+            patterns: [
+                { from: 'public/style.css', to: 'style.css' }
+            ]
+        })
     ],
 };

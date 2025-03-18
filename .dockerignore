@@ -1,0 +1,7 @@
+target/
+pkg/
+node_modules/
+dist/
+.vscode/settings.json
+public/hashing.js
+public/hashing_bg.wasm
