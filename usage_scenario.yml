@@ -3,41 +3,26 @@
 # https://github.com/green-coding-solutions/simple-example-application?tab=readme-ov-file
 ---
 name: Green coding with Rust demo
-author: András Ács Pedersen <anac@zealand.dk>
-description: This is a demonstration usage_scenario ...
+author: Sofush & András Ács Pedersen <anac@zealand.dk>  
+description: This is a demonstration usage scenario for testing a basci web application
 
 networks:
   name: no-network-for-now
 
 services:
-  hashing-service:
-    image: gcb_wordpress_mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+  hashing-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 3306:3306
-    setup-commands:
-      - sleep 20
-    volumes:
-      - /LOCAL/PATH:/PATH/IN/CONTAINER
-    networks:
-      - wordpress-mariadb-data-green-coding-network
-    healthcheck:
-      test: curl -f http://nc
-      interval: "30s"
-      timeout: "10s"
-      retries: 10
-      start_period: "10s"
-      disable: False
-  gcb-wordpress-apache:
-    # ...
-    depends_on:
-      gcb-wordpress-mariadb:
-        condition: service_healthy
-  gcb-wordpress-dummy:
-    # ...
-    depends_on:
-      - gcb-wordpress-mariadb  
+      - "8080:8080"
+    container_name: hashing-app
+    #command: ["npm", "run", "serve"]
+
+flow: 
+  - name: Hashing test
+    container: hashing-app
+    commands:
+      - type: console
+        command: npm run serve
+        note: Starting service
