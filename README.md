@@ -18,3 +18,4 @@ We'll need a Pupeteer script, which does the following with the index.html:
 - It waits for the values sha512-elapsed and sha256-digest and displays both
 - It repeats this 3 times
 
+We will have to update the usage_scenario.yml, so it build the service right and tests with the pupeteer script.
