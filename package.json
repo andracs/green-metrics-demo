@@ -15,7 +15,8 @@
   "dependencies": {
     "@aws-crypto/crc32": "^5.2.0",
     "@noble/hashes": "^1.7.1",
-    "crypto-js": "^4.2.0"
+    "crypto-js": "^4.2.0",
+   "puppeteer": "^21.3.8"  // Added Puppeteer
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
