@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 (async () => {
   const iterations = 1000000;
   const text = "Lorem ipsum Rustsum";
-  const url = "https://github.com/andracs/green-metrics-demo/blob/main/public/index.html"; // Replace this with the actual live URL of your index.html if hosted
+  const url = "http://127.0.0.1:8080"; 
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -16,18 +16,18 @@ const puppeteer = require('puppeteer');
 
     // Set the iterations value
     await page.evaluate((iterations) => {
-      const iterationsInput = document.querySelector('#iterations'); // Adjust the selector according to the input element in index.html
+      const iterationsInput = document.querySelector('#iterations'); 
       if (iterationsInput) iterationsInput.value = iterations;
     }, iterations);
 
     // Set the text value
     await page.evaluate((text) => {
-      const textInput = document.querySelector('#text'); // Adjust the selector according to the input element in index.html
+      const textInput = document.querySelector('#input'); 
       if (textInput) textInput.value = text;
     }, text);
 
     // Trigger the process (e.g., click a button)
-    await page.click('#start-button'); // Adjust the selector according to the button element in index.html
+    // await page.click('#start-button'); // Adjust the selector according to the button element in index.html
 
     // Wait for the results to appear
     const sha512Elapsed = await page.waitForSelector('#sha512-elapsed', { visible: true });
